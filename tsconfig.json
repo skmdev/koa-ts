@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "lib": [
+        "esnext"
+      ],
+      "paths": {
+          "*": [
+              "src/types/*"
+          ]
+      },
+      "experimentalDecorators": true,
+    },
+    "include": [
+      "config/**/*",
+      "src/**/*"
+    ],
+    "exclude": [
+      "node_modules",
+      "build"
+    ]
+}

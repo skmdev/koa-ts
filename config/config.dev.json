@@ -1,0 +1,9 @@
+{
+  "port": 8080,
+  "secert": "test",
+  "db": {
+    "reconnectTries": 5,
+    "reconnectInterval": 60000,
+    "url": "mongodb://admin:admin@ds039175.mlab.com:39175/book"
+  }
+}

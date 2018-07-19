@@ -1,0 +1,25 @@
+{
+  "apps": [
+    {
+      "name": "six_devenv",
+      "script": "./src/app.ts",
+      "instances": 1,
+      "exec_mode": "fork",
+      "watch": true,
+      "ignore_watch": [
+        "node_modules",
+        "public",
+        "logs",
+        "package.json",
+        "config",
+        ".git/*",
+        "./src/assets"
+      ],
+      "listen_timeout": 8000,
+      "kill_timeout": 1600,
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "six_prodenv",
+      "script": "./dist/src/app.js",
+      "instances": 1,
+      "exec_mode": "fork",
+      "watch": false,
+      "listen_timeout": 8000,
+      "kill_timeout": 1600,
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
