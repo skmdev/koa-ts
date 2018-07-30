@@ -9,6 +9,9 @@ export interface IConfig {
     reconnectInterval: number;
     url: string;
   };
+  log: {
+    dir: string;
+  };
 }
 
 let config: IConfig;
