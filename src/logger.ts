@@ -1,11 +1,10 @@
-import Pino, { LevelMapping } from 'pino';
+import Pino from 'pino';
 import childProcess from 'child_process';
 import stream from 'stream';
-import { Middleware } from 'Koa';
+import { Middleware } from 'koa';
 import path from 'path';
 
 import Config from '../config';
-import moment from 'moment';
 
 const cwd = process.cwd();
 const { env } = process;
