@@ -7,41 +7,48 @@ import Router from 'koa-decorator-ts/router';
 import Database from './database';
 import Config from '../config';
 
-// import { loggerRegister } from './middlewares/logge';
 import errorCatch from './middlewares/error';
 
 import Logger from './logger';
 
-const logger = Logger.getLogger('Koa');
-const app = new Koa();
-const router = new Router({
-  app,
-  apiDirPath: `${__dirname}/controllers`,
-  jwt: {
-    secret: Config.secret,
-  },
-});
+class Server {
+  private app = new Koa();
+  private router = new Router({
+    app: this.app,
+    apiDirPath: `${__dirname}/controllers`,
+    jwt: {
+      secret: Config.secret,
+    },
+  });
 
-// const logger = getLogger('Koa');
+  public logger = Logger.getLogger('KoaApp');
 
-// Middleware
-app.use(serve(path.join(__dirname, '../public')));
-app.use(Logger.register(logger));
-app.use(bodyParser());
-app.use(errorCatch());
+  public static async init() {
+    const server = new this();
+    server.initMiddleware();
+    server.router.registerRouters();
+    // Global Error Catch
+    server.app.on('error', (err, ctx) => {
+      server.logger.error(err);
+      ctx.logger.error(err);
+    });
+    return server;
+  }
 
-// Global Error Catch
-app.on('error', (err, ctx) => {
-  logger.error(err);
-  ctx.logger.error(err);
-});
+  initMiddleware() {
+    this.app.use(serve(path.join(__dirname, '../public')));
+    this.app.use(Logger.register(this.logger));
+    this.app.use(bodyParser());
+    this.app.use(errorCatch());
+  }
 
-init();
-
-async function init() {
-  await Database.connect(Config.db);
-  router.registerRouters();
-  await app.listen(Config.port);
-  logger.info('Application is listening port:', Config.port);
-  logger.debug('haha:', { test: 'haha' }, 'gaga', { bb: 'cc', vv: 'vv' });
+  async start() {
+    await this.app.listen(Config.port);
+  }
 }
+
+Server.init().then(async (server) => {
+  await Database.connect(Config.db);
+  await server.start();
+  server.logger.info('Application is listening port:', Config.port);
+});

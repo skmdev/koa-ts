@@ -9,8 +9,9 @@ export interface IConfig {
     reconnectInterval: number;
     url: string;
   };
-  log: {
-    dir: string;
+  logger: {
+    appLog: string;
+    errorLog: string;
   };
 }
 

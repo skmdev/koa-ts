@@ -1,26 +1,27 @@
-import Pino from 'pino';
+import Pino, { LevelMapping } from 'pino';
 import childProcess from 'child_process';
 import stream from 'stream';
 import { Middleware } from 'Koa';
+import path from 'path';
+
+import Config from '../config';
+import moment from 'moment';
 
 const cwd = process.cwd();
 const { env } = process;
-const logPath = `${cwd}/logs`;
 
 // Log to multiple files using a separate process
 const child = childProcess.spawn(
   process.execPath,
   [
     require.resolve('pino-tee'),
+    '0', // 0 for all log
+    path.resolve(cwd, Config.logger.appLog),
     'error',
-    `${logPath}/error.log`,
-    // ' > ',
-    // `${logPath}/app.log`,
+    path.resolve(cwd, Config.logger.errorLog),
   ],
   { cwd, env },
 );
-
-console.log(`${logPath}/app.log`);
 
 const logThrough = new stream.PassThrough();
 logThrough.pipe(child.stdin);
@@ -28,10 +29,6 @@ logThrough.pipe(child.stdin);
 // Log pretty messages to console (optional, for development purposes only)
 const pretty = Pino.pretty({
   forceColor: true,
-  // formatter: (log) => {
-  //   log.hostname;
-  //   return log.time;
-  // },
 });
 
 pretty.pipe(process.stdout);
@@ -41,8 +38,8 @@ logThrough.pipe(pretty);
 class Logger {
   private static requestID = 0;
 
-  public static getLogger(name: string, prettyOptions?: Pino.PrettyOptions) {
-    return Pino({ name }, logThrough); // logThrough
+  public static getLogger(name: string) {
+    return Pino({ name }, logThrough);
   }
 
   public static register = (logger: any): Middleware => async (
@@ -54,10 +51,7 @@ class Logger {
 
     const startTime = process.hrtime();
     ctx.logger.info(`→ (ID:${currentRequestID}) ${ctx.method} ${ctx.url}`);
-    if (
-      ctx.method.toLowerCase() == 'post' ||
-      ctx.method.toLowerCase() == 'put'
-    ) {
+    if (['post', 'put'].indexOf(ctx.method.toLowerCase()) > -1) {
       ctx.logger.info(
         `→ (ID:${currentRequestID}) ${ctx.method} ${JSON.stringify(
           ctx.request.body,
