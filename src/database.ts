@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { IConfig } from '../config';
-import { getLogger } from './middlewares/logger';
+import Logger from './logger';
 
 class Database {
-  private static logger = getLogger('Database');
+  private static logger = Logger.getLogger('Database');
   public static isConnected: boolean = false;
 
   public static async connect(options: IConfig['db']) {

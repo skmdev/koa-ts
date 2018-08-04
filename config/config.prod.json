@@ -3,5 +3,9 @@
   "secert": "test",
   "db": {
     "url": ""
+  },
+  "logs": {
+    "appLog": "./logs/app.logs",
+    "errLog": "./logs/app.logs"
   }
 }

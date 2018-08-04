@@ -4,19 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "gulp",
+    "build": "gulp build",
+    "dev": "gulp",
     "start": "pm2 start config/pm2.prod.config.json",
-    "dev": "pm2 start config/pm2.dev.config.json && pm2 logs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "node dist/src/app.js"
   },
   "devDependencies": {
+    "@types/gulp-nodemon": "0.0.32",
+    "@types/gulp-sourcemaps": "0.0.32",
     "@types/koa": "^2.0.46",
     "@types/koa-bodyparser": "^5.0.1",
-    "@types/koa-router": "^7.0.30",
-    "@types/mongoose": "^5.2.0",
+    "@types/koa-router": "^7.0.31",
+    "@types/koa-static": "^4.0.0",
+    "@types/mongoose": "^5.2.3",
+    "@types/pino": "^4.16.1",
     "@types/run-sequence": "0.0.30",
     "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-run-command": "0.0.9",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "^5.0.0-alpha.3",
+    "nodemon": "^1.18.3",
     "run-sequence": "^2.2.1",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
@@ -26,8 +34,13 @@
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-decorator-ts": "^1.3.8",
-    "log4js": "^3.0.0",
+    "koa-static": "^5.0.0",
+    "log4js": "^3.0.3",
+    "moment": "^2.22.2",
     "mongodb": "^3.1.1",
-    "mongoose": "^5.2.4"
+    "mongoose": "^5.2.6",
+    "pino": "^4.17.6",
+    "pino-pretty": "^1.0.1",
+    "pino-tee": "^0.2.2"
   }
 }

@@ -5,6 +5,7 @@ import { Route, Controller } from 'koa-decorator-ts';
 class UserController {
   @Route.get({ path: '/', unless: true })
   static async test(ctx: Koa.Context) {
+    ctx.logger.info('test');
     ctx.body = 'test';
   }
 }

@@ -1,5 +1,11 @@
 {
     "compilerOptions": {
+      "alwaysStrict": true,
+      "inlineSources": true,
+
+      "inlineSourceMap": true,
+      "strictNullChecks": true,
+
       "module": "commonjs",
       "esModuleInterop": true,
       "target": "es6",
@@ -24,6 +30,7 @@
     ],
     "exclude": [
       "node_modules",
-      "build"
+      "build",
+      "glupfile.ts"
     ]
 }

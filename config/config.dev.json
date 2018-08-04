@@ -5,5 +5,9 @@
     "reconnectTries": 5,
     "reconnectInterval": 60000,
     "url": "mongodb://admin:admin@ds039175.mlab.com:39175/book"
+  },
+  "logger": {
+    "appLog": "./logs/app.log",
+    "errorLog": "./logs/error.log"
   }
 }
