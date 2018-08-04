@@ -4,6 +4,8 @@ import nodemon from 'gulp-nodemon';
 import ts from 'gulp-typescript';
 import sourcemaps from 'gulp-sourcemaps';
 
+const { GulpSSHDeploy } = require('gulp-ssh-deploy');
+
 const gulpConfig = {
   nodemon: {
     nodemon: require('nodemon'),
@@ -14,6 +16,19 @@ const gulpConfig = {
     tasks: ['build'],
   },
   copyfiles: ['package.json', 'config/*.json'],
+  sshDeploy: {
+    host: '127.0.0.1',
+    port: 53841,
+    package_json_file_path: 'package.json',
+    source_files: './dist',
+    remote_directory: '/remoteLocation/Koa-ts',
+    username: 'root',
+    ssh_key_file: '~/.ssh/id_rsa',
+    releases_to_keep: 3,
+    // group: 'root-group',
+    permissions: 'ugo+rX',
+    // package_task: 'someTask',
+  },
 };
 
 // const run = require('gulp-run-command').default;
@@ -41,3 +56,9 @@ gulp.task('tsc', () => {
 gulp.task('build', (callback) => runSequence('tsc', 'copyfile', callback));
 
 gulp.task('default', (callback) => runSequence('build', 'nodemon', callback));
+
+try {
+  new GulpSSHDeploy(gulpConfig.sshDeploy, gulp);
+} catch (e) {
+  console.error(e);
+}

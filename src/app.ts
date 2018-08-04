@@ -12,6 +12,7 @@ import errorCatch from './middlewares/error';
 import Logger from './logger';
 
 class Server {
+  public static logger = Logger.getLogger('Server');
   private app = new Koa();
   private router = new Router({
     app: this.app,
@@ -47,8 +48,10 @@ class Server {
   }
 }
 
-Server.init().then(async (server) => {
-  await Database.connect(Config.db);
-  await server.start();
-  server.logger.info('Application is listening port:', Config.port);
-});
+Server.init()
+  .then(async (server) => {
+    await Database.connect(Config.db);
+    await server.start();
+    server.logger.info('Application is listening port:', Config.port);
+  })
+  .catch((e) => Server.logger.error(e));
