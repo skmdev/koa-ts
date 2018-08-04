@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "gulp",
+    "build": "gulp build",
+    "dev": "gulp",
     "start": "pm2 start config/pm2.prod.config.json",
-    "dev": "pm2 start config/pm2.dev.config.json && pm2 logs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "node dist/src/app.js"
   },
   "devDependencies": {
+    "@types/gulp-nodemon": "0.0.32",
+    "@types/gulp-sourcemaps": "0.0.32",
     "@types/koa": "^2.0.46",
     "@types/koa-bodyparser": "^5.0.1",
     "@types/koa-router": "^7.0.31",
@@ -18,7 +20,11 @@
     "@types/pino": "^4.16.1",
     "@types/run-sequence": "0.0.30",
     "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-run-command": "0.0.9",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "^5.0.0-alpha.3",
+    "nodemon": "^1.18.3",
     "run-sequence": "^2.2.1",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
