@@ -11,7 +11,7 @@ const gulpConfig = {
     ext: 'ts',
     watch: 'src',
     env: { NODE_ENV: 'development' },
-    tasks: ['tsc'],
+    tasks: ['build'],
   },
   copyfiles: ['package.json', 'config/*.json'],
 };
@@ -22,12 +22,10 @@ gulp.task('copyfile', () => {
   for (const fileUrl of gulpConfig.copyfiles) {
     gulp.src(fileUrl, { base: './' }).pipe(gulp.dest('dist'));
   }
-  return;
 });
 
 gulp.task('nodemon', () => {
   nodemon(gulpConfig.nodemon as any);
-  return;
 });
 
 gulp.task('tsc', () => {
@@ -42,4 +40,4 @@ gulp.task('tsc', () => {
 
 gulp.task('build', (callback) => runSequence('tsc', 'copyfile', callback));
 
-gulp.task('default', () => runSequence('build', 'nodemon'));
+gulp.task('default', (callback) => runSequence('build', 'nodemon', callback));
